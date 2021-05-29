@@ -21,11 +21,14 @@ import java.lang.reflect.Method;
 import org.apache.ibatis.reflection.Reflector;
 
 /**
+ * 负责对象其他方法的操作
  * @author Clinton Begin
  */
 public class MethodInvoker implements Invoker {
 
-  // 传入参数或者传出参数类型
+  /**
+   * 传入参数或者传出参数类型
+   */
   private final Class<?> type;
   private final Method method;
 
@@ -44,7 +47,14 @@ public class MethodInvoker implements Invoker {
     }
   }
 
-  // 执行函数
+  /**
+   * 执行函数（代理方法）
+   * @param target 被代理的目标对象
+   * @param args 方法的参数
+   * @return 方法执行的结果
+   * @throws IllegalAccessException
+   * @throws InvocationTargetException
+   */
   @Override
   public Object invoke(Object target, Object[] args) throws IllegalAccessException, InvocationTargetException {
     try {

@@ -20,10 +20,14 @@ import java.lang.reflect.Field;
 import org.apache.ibatis.reflection.Reflector;
 
 /**
+ * 负责对象属性的写操作
  * @author Clinton Begin
  */
 public class SetFieldInvoker implements Invoker {
-  // 要操作的属性
+
+  /**
+   * 要操作的属性
+   */
   private final Field field;
 
   public SetFieldInvoker(Field field) {
