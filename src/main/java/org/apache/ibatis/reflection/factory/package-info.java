@@ -15,5 +15,6 @@
  */
 /**
  * Object factory.
+ * 该包中的类用来基于反射生产出各种对象
  */
 package org.apache.ibatis.reflection.factory;

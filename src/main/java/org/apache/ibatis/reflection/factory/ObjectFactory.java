@@ -27,6 +27,7 @@ import java.util.Properties;
 public interface ObjectFactory {
 
   /**
+   * 设置工厂的属性
    * Sets configuration properties.
    * @param properties configuration properties
    */
@@ -51,6 +52,7 @@ public interface ObjectFactory {
   <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs);
 
   /**
+   * 判断传入的类型是否是集合类
    * Returns true if this object can have a set of other objects.
    * It's main purpose is to support non-java.util.Collection objects like Scala collections.
    *
