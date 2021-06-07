@@ -42,6 +42,9 @@ public class BeanWrapper extends BaseWrapper {
     this.metaClass = MetaClass.forClass(object.getClass(), metaObject.getReflectorFactory());
   }
 
+  /**
+   * 获得被包装对象某个属性的值
+   */
   @Override
   public Object get(PropertyTokenizer prop) {
     if (prop.getIndex() != null) {
@@ -53,6 +56,9 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 设置被包装对象某个属性的值；
+   */
   @Override
   public void set(PropertyTokenizer prop, Object value) {
     if (prop.getIndex() != null) {
@@ -63,21 +69,33 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 找到对应的属性名称；
+   */
   @Override
   public String findProperty(String name, boolean useCamelCaseMapping) {
     return metaClass.findProperty(name, useCamelCaseMapping);
   }
 
+  /**
+   * 得所有的属性 get方法名称；
+   */
   @Override
   public String[] getGetterNames() {
     return metaClass.getGetterNames();
   }
 
+  /**
+   * 获得所有的属性 set方法名称
+   */
   @Override
   public String[] getSetterNames() {
     return metaClass.getSetterNames();
   }
 
+  /**
+   * 获得指定属性的 set方法的类型
+   */
   @Override
   public Class<?> getSetterType(String name) {
     PropertyTokenizer prop = new PropertyTokenizer(name);
@@ -93,6 +111,9 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 获得指定属性的 get方法的类型
+   */
   @Override
   public Class<?> getGetterType(String name) {
     PropertyTokenizer prop = new PropertyTokenizer(name);
@@ -108,6 +129,9 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 判断某个属性是否有对应的 set方法
+   */
   @Override
   public boolean hasSetter(String name) {
     PropertyTokenizer prop = new PropertyTokenizer(name);
@@ -127,6 +151,9 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 判断某个属性是否有对应的 get方法
+   */
   @Override
   public boolean hasGetter(String name) {
     PropertyTokenizer prop = new PropertyTokenizer(name);
@@ -146,6 +173,9 @@ public class BeanWrapper extends BaseWrapper {
     }
   }
 
+  /**
+   * 实例化某个属性的值
+   */
   @Override
   public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
     MetaObject metaValue;
