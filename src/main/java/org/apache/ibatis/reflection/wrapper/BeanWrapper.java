@@ -160,7 +160,12 @@ public class BeanWrapper extends BaseWrapper {
     return metaValue;
   }
 
-  // 通过调用getter方法，获取对象属性
+  /**
+   * 通过调用getter方法，获取对象属性
+   * @param prop
+   * @param object
+   * @return
+   */
   private Object getBeanProperty(PropertyTokenizer prop, Object object) {
     try {
       Invoker method = metaClass.getGetInvoker(prop.getName());

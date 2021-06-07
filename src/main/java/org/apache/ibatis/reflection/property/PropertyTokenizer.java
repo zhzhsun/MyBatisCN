@@ -86,4 +86,9 @@ public class PropertyTokenizer implements Iterator<PropertyTokenizer> {
   public void remove() {
     throw new UnsupportedOperationException("Remove is not supported, as it has no meaning in the context of properties.");
   }
+
+  public static void main(String[] args) {
+    PropertyTokenizer propertyTokenizer = new PropertyTokenizer("student[sId].name");
+    System.out.println(propertyTokenizer);
+  }
 }
