@@ -28,6 +28,10 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+/**
+ * 参数名解析器
+ * 按顺序列出方法中的虚参，并对实参进行名称标注
+ */
 public class ParamNameResolver {
 
   private static final String GENERIC_NAME_PREFIX = "param";
@@ -46,11 +50,14 @@ public class ParamNameResolver {
    * </ul>
    *
    * 凡是加了@Param注解的会单独处理，特殊参数也会单独处理
+   *
+   * 方法入参的参数次序表。键为参数次序，值为参数名称或者参数@Param注解的值
    */
-
-  // 方法入参的参数次序表。键为参数次序，值为参数名称或者参数@Param注解的值
   private final SortedMap<Integer, String> names;
-  // 该方法入参中是否含有@Param注解
+
+  /**
+   * 该方法入参中是否含有@Param注解
+   */
   private boolean hasParamAnnotation;
 
   /**

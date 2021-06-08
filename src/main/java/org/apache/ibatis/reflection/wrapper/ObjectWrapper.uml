@@ -42,7 +42,7 @@
       <point x="-51.5" y="27.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="181.5" y="225.5" />
+  <settings layout="Hierarchic Group" zoom="0.6562235393734124" x="181.5" y="225.5" />
   <SelectedNodes>
     <node>org.apache.ibatis.reflection.wrapper.ObjectWrapper</node>
   </SelectedNodes>

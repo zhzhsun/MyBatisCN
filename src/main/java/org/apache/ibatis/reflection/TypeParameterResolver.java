@@ -27,12 +27,15 @@ import java.util.Arrays;
 
 /**
  * @author Iwao AVE!
+ * 泛型参数解析器
  */
 public class TypeParameterResolver {
 
     /**
      * @return The field type as {@link Type}. If it has type parameters in the declaration,<br>
-     *         they will be resolved to the actual runtime {@link Type}s.
+     * they will be resolved to the actual runtime {@link Type}s.
+     * <p>
+     * 解析属性的泛型
      */
     public static Type resolveFieldType(Field field, Type srcType) {
         // 返回属性的类型，如果是泛型，则为这次的实际类型
@@ -44,7 +47,9 @@ public class TypeParameterResolver {
 
     /**
      * @return The return type of the method as {@link Type}. If it has type parameters in the declaration,<br>
-     *         they will be resolved to the actual runtime {@link Type}s.
+     * they will be resolved to the actual runtime {@link Type}s.
+     * <p>
+     * 解析方法返回值的泛型
      */
     public static Type resolveReturnType(Method method, Type srcType) {
         Type returnType = method.getGenericReturnType();
@@ -55,11 +60,14 @@ public class TypeParameterResolver {
     /**
      * @return The parameter types of the method as an array of {@link Type}s. If they have type parameters in the declaration,<br>
      *         they will be resolved to the actual runtime {@link Type}s.
+     *
+     *         解析方法入参的泛型
      */
 
     /**
      * 解析方法入参
-     * @param method 目标方法
+     *
+     * @param method  目标方法
      * @param srcType 目标方法所属的类
      * @return 解析结果
      */
@@ -79,17 +87,22 @@ public class TypeParameterResolver {
 
     /**
      * 解析变量的实际类型
-     * @param type 变量的类型
-     * @param srcType 变量所属于的类
+     *
+     * @param type           变量的类型
+     * @param srcType        变量所属于的类
      * @param declaringClass 定义变量的类
      * @return 解析结果
      */
     private static Type resolveType(Type type, Type srcType, Class<?> declaringClass) {
-        if (type instanceof TypeVariable) { // 如果是类型变量，例如“Map<K，V>”中的“K”、“V”就是类型变量。
+
+        if (type instanceof TypeVariable) {
+            // 如果是类型变量，例如“Map<K，V>”中的“K”、“V”就是类型变量。
             return resolveTypeVar((TypeVariable<?>) type, srcType, declaringClass);
-        } else if (type instanceof ParameterizedType) { // 如果是参数化类型，例如“Collection<String>”就是参数化的类型。
+        } else if (type instanceof ParameterizedType) {
+            // 如果是参数化类型，例如“Collection<String>”就是参数化的类型。
             return resolveParameterizedType((ParameterizedType) type, srcType, declaringClass);
-        } else if (type instanceof GenericArrayType) { // 如果是包含ParameterizedType或者TypeVariable元素的列表
+        } else if (type instanceof GenericArrayType) {
+            // 如果是包含ParameterizedType或者TypeVariable元素的列表
             return resolveGenericArrayType((GenericArrayType) type, srcType, declaringClass);
         } else {
             return type;
@@ -98,19 +111,23 @@ public class TypeParameterResolver {
 
     /**
      * 解析泛型列表的实际类型
+     *
      * @param genericArrayType 泛型列表变量类型
-     * @param srcType 变量所属于的类
-     * @param declaringClass 定义变量的类
+     * @param srcType          变量所属于的类
+     * @param declaringClass   定义变量的类
      * @return 解析结果
      */
     private static Type resolveGenericArrayType(GenericArrayType genericArrayType, Type srcType, Class<?> declaringClass) {
         Type componentType = genericArrayType.getGenericComponentType();
         Type resolvedComponentType = null;
-        if (componentType instanceof TypeVariable) { // 元素类型是类变量。例如genericArrayType为T[]则属于这种情况
+        if (componentType instanceof TypeVariable) {
+            // 元素类型是类变量。例如genericArrayType为T[]则属于这种情况
             resolvedComponentType = resolveTypeVar((TypeVariable<?>) componentType, srcType, declaringClass);
-        } else if (componentType instanceof GenericArrayType) { // 元素类型是泛型列表。例如genericArrayType为T[][]则属于这种情况
+        } else if (componentType instanceof GenericArrayType) {
+            // 元素类型是泛型列表。例如genericArrayType为T[][]则属于这种情况
             resolvedComponentType = resolveGenericArrayType((GenericArrayType) componentType, srcType, declaringClass);
-        } else if (componentType instanceof ParameterizedType) { // 元素类型是参数化类型。例如genericArrayType为Collection<T>[]则属于这种情况
+        } else if (componentType instanceof ParameterizedType) {
+            // 元素类型是参数化类型。例如genericArrayType为Collection<T>[]则属于这种情况
             resolvedComponentType = resolveParameterizedType((ParameterizedType) componentType, srcType, declaringClass);
         }
         if (resolvedComponentType instanceof Class) {
@@ -122,9 +139,10 @@ public class TypeParameterResolver {
 
     /**
      * 解析参数化类型的实际结果
+     *
      * @param parameterizedType 参数化类型的变量
-     * @param srcType 该变量所属于的类
-     * @param declaringClass 定义该变量的类
+     * @param srcType           该变量所属于的类
+     * @param declaringClass    定义该变量的类
      * @return 参数化类型的实际结果
      */
     private static ParameterizedType resolveParameterizedType(ParameterizedType parameterizedType, Type srcType, Class<?> declaringClass) {
@@ -172,8 +190,9 @@ public class TypeParameterResolver {
 
     /**
      * 解析泛型变量的实际结果
-     * @param typeVar 泛型变量
-     * @param srcType 该变量所属于的类
+     *
+     * @param typeVar        泛型变量
+     * @param srcType        该变量所属于的类
      * @param declaringClass 定义该变量的类
      * @return 泛型变量的实际结果
      */
